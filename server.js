@@ -1,16 +1,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import userRoutes from './routes/user.js';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+import userRoutes from './routes/user.js';
+
+dotenv.config();  // Load environment variables from .env
 
 const app = express();
-
-const PORT = 5000;
-const MONGO_DB_NAME = 'sample';
-
 // Connect to MongoDB
 mongoose
-  .connect(`mongodb://localhost:27017/${MONGO_DB_NAME}`, {
+  .connect(`${process.env.MONGO_CONNECTION}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -25,6 +25,6 @@ app.get('/', (req, res, next) => {
 
 app.use('/users', userRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server Ready!, http://localhost:${PORT}`)
+app.listen(process.env.PORT, () => {
+    console.log(`Server Ready!, ${process.env.SERVER_URL}`)
 });
