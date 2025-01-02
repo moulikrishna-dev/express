@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import userRoutes from './routes/user.js';
+import weatherRoutes from './routes/weather.js';
 
 dotenv.config();  // Load environment variables from .env
 
@@ -24,6 +25,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use('/users', userRoutes);
+app.use('/weather', weatherRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server Ready!, ${process.env.SERVER_URL}`)
