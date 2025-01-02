@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/user.js';
 import mongoose from 'mongoose';
-import userController from './controllers/userController.js';
 
 const app = express();
 
@@ -23,11 +22,8 @@ app.use(bodyParser.json());
 app.get('/', (req, res, next) => {
     res.send('Hello, I am from HomePage!')
 });
-//app.use('/users', userRoutes);
-app.get('/users', userController.getAllUsers);
-app.post('/users', userController.createUser);
-app.get('/users/:id', userController.getUser);
-app.delete('/users/:id', userController.deleteUser);
+
+app.use('/users', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server Ready!, http://localhost:${PORT}`)

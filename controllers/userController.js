@@ -24,6 +24,9 @@ const getUser = async (req, res) => {
     try {
         const {id} = req.params;
         const user = await User.findById(id);
+        if(!user) {
+            return res.status(404).send({error: "User not found!"});
+        }
         res.send(user);
     } catch (error) {
         console.error(error);
@@ -39,11 +42,26 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         
     }
-}   
+}
+
+const updateUser = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const inputData = req.body;
+        const user = await User.findByIdAndUpdate(id, inputData, { new: true, runValidators: true });
+        if (!user) {
+            return res.status(404).send({ error: "User not found" });
+        }
+        res.send(user);
+    } catch (error) {
+        
+    }
+}
 
 export default {
     createUser,
     getUser,
     deleteUser,
-    getAllUsers
+    getAllUsers,
+    updateUser
 }
